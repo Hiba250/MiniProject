@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Travel Plan</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url("{% static 'core/images/island.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-wrapper {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      color: white;
+    }
+
+    .form-wrapper h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007b5e;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f47;
+    }
+
+    .error {
+      color: #ff8080;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+  <h2>🗺️ Plan Your Trip</h2>
+  <form action="{% url 'create_plan' %}" method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_destination">Destination</label>
+      {{ form.destination }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_start_date">Start Date</label>
+      <input type="text" id="id_start_date" name="start_date" required>
+    </div>
+
+    <div class="form-group">
+      <label for="id_end_date">End Date</label>
+      {% comment %} <input type="text" id="id_end_date" name="end_date" required> {% endcomment %}
+      {{ form.end_date }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_budget">Budget</label>
+      {{ form.budget }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_theme">Theme</label>
+      {{ form.theme }}
+    </div>
+
+    <button type="submit">Create Plan</button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr("#id_start_date", {
+    dateFormat: "Y-m-d",        // e.g. 2025-01-15
+    altInput: true,
+    altFormat: "F j, Y",        // e.g. January 15, 2025
+    allowInput: true
+  });
+
+  flatpickr("#id_end_date", {
+    dateFormat: "Y-m-d",
+    altInput: true,
+    altFormat: "F j, Y",
+    allowInput: true
+  });
+</script>
+
+</body>
+</html>

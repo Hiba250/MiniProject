@@ -1,0 +1,43 @@
+{% block content %}
+  <style>
+    .plan-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .plan-box {
+      background-color: #f0f8ff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .plan-box:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .plan-box h3 {
+      margin-top: 0;
+      color: #0077b6;
+    }
+  </style>
+
+  <div class="plan-container">
+    {% for plan in plans %}
+      <div class="plan-box">
+        <h3>{{ plan.destination }}</h3>
+        <p>{{ plan.start_date }} to {{ plan.end_date }}</p>
+        <p>Budget: ₹{{ plan.budget }}</p>
+        <p>Theme: {{ plan.theme }}</p>
+        <p>Posted by: {{ plan.created_by.username }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

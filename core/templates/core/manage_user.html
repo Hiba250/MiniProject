@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage User</title>
+    <style>
+        .form-wrapper {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f9ff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-wrapper h2 {
+            text-align: center;
+            color: #005fa3;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="checkbox"], textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #005fa3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #004080;
+        }
+        .messages {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+.messages li {
+  background-color: #e6f7ff;
+  border-left: 4px solid #005fa3;
+  padding: 10px;
+  margin-bottom: 5px;
+  color: #005fa3;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+    <h2>🔧 Manage User: {{ form.instance.user.username }}</h2>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li style="color: green; font-weight: bold;">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_is_verified">Verified</label>
+            {{ form.is_verified }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_is_blocked">Blocked</label>
+            {{ form.is_blocked }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_notes">Admin Notes</label>
+            {{ form.notes }}
+        </div>
+
+        <button type="submit">Update User Status</button>
+    </form>
+</div>

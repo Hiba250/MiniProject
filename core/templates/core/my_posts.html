@@ -1,0 +1,11 @@
+<h2>My Travel Posts</h2>
+
+{% for post in posts %}
+  <div>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.description }}</p>
+    <small>Posted on {{ post.created_at }}</small>
+  </div>
+{% empty %}
+  <p>You haven’t posted anything yet.</p>
+{% endfor %}

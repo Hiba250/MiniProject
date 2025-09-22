@@ -1,0 +1,75 @@
+<h2 style="font-size: 28px; color: #002b5c; margin-bottom: 20px;">🛠️ Moderate Travel Posts</h2>
+
+<style>
+  .post-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .post-card h3 {
+    margin-top: 0;
+    color: #005fa3;
+  }
+
+  .post-card p {
+    margin: 8px 0;
+    color: #333;
+  }
+
+  .post-card img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .moderation-form {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .moderation-form select {
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  .moderation-form button {
+    background-color: #005fa3;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .moderation-form button:hover {
+    background-color: #004080;
+  }
+</style>
+
+{% for post in posts %}
+  <div class="post-card">
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.description }}</p>
+    <p><strong>By:</strong> {{ post.user.username }}</p>
+    <p><strong>Status:</strong> {{ post.status }}</p>
+    <img src="{{ post.photo.url }}" alt="Post Image">
+
+    <form method="POST" class="moderation-form">
+      {% csrf_token %}
+      <input type="hidden" name="post_id" value="{{ post.id }}">
+      <select name="status">
+        <option value="Approved">Approve</option>
+        <option value="Rejected">Reject</option>
+      </select>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+{% endfor %}

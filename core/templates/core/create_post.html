@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Travel Post</title>
+
+  <!-- ✅ Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- ✅ Styling -->
+  <style> 
+    .form-wrapper { 
+        max-width: 600px; 
+        margin: auto; 
+        padding: 20px; 
+        background-color: #f9fcff; 
+        border-radius: 8px; 
+        box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    }
+    .form-wrapper h2 { 
+        text-align: center; 
+        margin-bottom: 20px; 
+        color: #0077cc; 
+    } 
+    .form-group { 
+        margin-bottom: 15px; 
+    }
+    label { 
+        font-weight: bold; 
+        display: block; 
+        margin-bottom: 5px; 
+    } 
+    input, select, textarea { 
+        width: 100%; 
+        padding: 8px; 
+        border-radius: 4px; 
+        border: 1px solid #ccc; 
+    } 
+    textarea { 
+        resize: vertical; 
+        min-height: 100px; 
+    } 
+    button { 
+        width: 100%; 
+        padding: 10px; 
+        background-color: #0077cc; 
+        color: white; 
+        border: none; 
+        border-radius: 4px;
+        font-size: 16px;
+    } 
+    button:hover { 
+        background-color: #005fa3; 
+    } 
+    #preview { 
+        display: none; 
+        max-width: 100%; 
+        margin-top: 10px; 
+    } 
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+  <h2>📸 Share Your Travel Experience</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_title">Title</label>
+      {{ form.title }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_description">Description</label>
+      {{ form.description }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_location">Location</label>
+      
+      <div id="map" style="height: 300px; margin-top: 10px;"></div>
+        {{ form.location }}
+    </div>
+
+    {{ form.latitude }}
+    {{ form.longitude }}
+
+    <div class="form-group">
+      <label for="id_theme">Theme</label>
+      {{ form.theme }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_photo">Photo</label>
+      {{ form.photo }}
+      <img id="preview" />
+    </div>
+
+    <button type="submit">Post</button>
+  </form>
+</div>
+
+<!-- ✅ Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- ✅ Map logic -->
+<script>
+  var map = L.map('map').setView([11.2588, 75.7804], 9);  // Default view: Kerala
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  var marker;
+
+  map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Update hidden fields
+    document.getElementById('id_latitude').value = lat;
+    document.getElementById('id_longitude').value = lng;
+
+    // Add or move marker
+    if (marker) {
+      marker.setLatLng(e.latlng);
+    } else {
+      marker = L.marker(e.latlng).addTo(map);
+    }
+  });
+</script>
+<!-- ✅ Image Preview -->
+<script>
+  document.getElementById("id_photo").onchange = function(event) {
+    const preview = document.getElementById("preview");
+    preview.src = URL.createObjectURL(event.target.files[0]);
+    preview.style.display = "block";
+  };
+</script>
+
+</body>
+</html>

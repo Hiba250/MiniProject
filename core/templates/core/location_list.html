@@ -1,0 +1,11 @@
+<h2>🌍 Explore Locations</h2>
+{% for loc in locations %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <h3>{{ loc.name }}</h3>
+    <p>{{ loc.description }}</p>
+    <p><strong>Theme:</strong> {{ loc.theme }}</p>
+    <p><strong>Coordinates:</strong> {{ loc.coordinates }}</p>
+  </div>
+{% empty %}
+  <p>No locations available right now.</p>
+{% endfor %}

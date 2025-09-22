@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Travel Plan</title>
+  <!-- You can include styles and other head elements here -->
+</head>
+<body>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="id_destination">Destination</label>
+      {{ form.destination }}
+    </div>
+    <!-- other form fields -->
+    <button type="submit">Save</button>
+  </form>
+
+  <!-- ✅ Place this just before closing </body> -->
+  <script src="https://api.opencagedata.com/geosearch/js"></script>
+  <script>
+    opencage.geosearch.init({
+      key: '1f2517a5482a4634af312aebb4c0e881',  // Replace with your actual key
+      element: 'id_destination',
+      countrycode: 'IN',
+      limit: 5
+    });
+  </script>
+
+</body>
+</html>

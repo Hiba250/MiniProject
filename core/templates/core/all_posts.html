@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Travel Posts</title>
+    <style>
+  input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  button {
+    padding: 8px 12px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  button:hover {
+    background-color: #005fa3;
+  }
+</style>
+
+</head>
+<body>
+    <h2>📝 All Travel Posts</h2>
+
+    <form method="GET" action="{% url 'all_posts' %}">
+        <input type="text" name="q" placeholder="Search posts..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for post in posts %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <img src="{{ post.photo.url }}" width="200" alt="Travel photo by {{ post.user.username }}">
+    <p><strong>{{ post.user.username }}</strong> shared:</p>
+    <p>{{ post.description }}</p>
+    {% if post.date %}
+      <p><em>{{ post.date|date:"F j, Y, g:i A" }}</em></p>
+    {% else %}
+      <p><em>Date not available</em></p>
+    {% endif %}
+  </div>
+
+  <!-- 🔹 Divider between posts -->
+  <hr style="margin:20px 0;">
+{% empty %}
+  <p>No posts found.</p>
+{% endfor %}
+
+</body>
+</html>

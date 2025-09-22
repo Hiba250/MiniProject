@@ -1,0 +1,21 @@
+<h2>📋 My Reports</h2>
+<p><a href="{% url 'my_reports' %}">Refresh</a></p>
+
+{% for report in reports %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>Post:</strong> {{ report.post.title }}</p>
+    <p><strong>Reason:</strong> {{ report.reason }}</p>
+    <p><strong>Status:</strong> 
+  <span style="color: {% if report.status == 'Resolved' %}green{% else %}red{% endif %};">
+    {{ report.status }}
+  </span>
+</p>
+
+    <p><strong>Submitted:</strong> {{ report.timestamp|date:"M d, Y H:i" }}</p>
+  </div>
+{% empty %}
+  <p>You haven't reported any posts yet.</p>
+  <a href="{% url 'all_posts' %}" class="btn btn-primary">Explore Posts</a>
+
+
+{% endfor %}

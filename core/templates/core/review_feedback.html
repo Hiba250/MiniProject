@@ -1,0 +1,11 @@
+<h2>📝 Review Feedback</h2>
+
+{% for fb in feedbacks %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>User:</strong> {{ fb.user.username }}</p>
+    <p><strong>Message:</strong> {{ fb.message }}</p>
+    <p><strong>Status:</strong> {{ fb.status }}</p>
+  </div>
+{% empty %}
+  <p>No feedback to review.</p>
+{% endfor %}

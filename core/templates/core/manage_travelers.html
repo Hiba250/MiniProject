@@ -1,0 +1,8 @@
+<h2>👥 Manage Traveler Profiles</h2>
+
+{% for traveler in travelers %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>{{ traveler.username }}</strong> – {{ traveler.email }}</p>
+    <a href="{% url 'admin_edit_traveler' traveler.id %}">✏️ Edit Profile</a>
+  </div>
+{% endfor %}

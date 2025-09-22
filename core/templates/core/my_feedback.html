@@ -1,0 +1,12 @@
+<h2>📝 Review Feedback</h2>
+{% for feedback in feedbacks %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>User:</strong> {{ feedback.user.username }}</p>
+    <p><strong>Category:</strong> {{ feedback.category }}</p>
+    <p><strong>Message:</strong> {{ feedback.message }}</p>
+    <p><strong>Status:</strong> {{ feedback.status }}</p>
+    <p><strong>Submitted:</strong> {{ feedback.created_at|date:"M d, Y H:i" }}</p>
+  </div>
+{% empty %}
+  <p>No feedback submitted yet.</p>
+{% endfor %}

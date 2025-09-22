@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Current Location</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        .location-form {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f0fff4;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .location-form h2 {
+            text-align: center;
+            color: #007a5e;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007a5e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #005c47;
+        }
+    </style>
+</head>
+<body>
+
+<div class="location-form">
+  <h2>📍 Update Your Current Location</h2>
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_location">Location</label>
+      {{ form.location }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_update_note">Update Note</label>
+      {{ form.update_note }}
+    </div>
+
+    <!-- ✅ Hidden fields for coordinates -->
+    {{ form.latitude }}
+    {{ form.longitude }}
+
+    <button type="submit">Save Location</button>
+  </form>
+
+  <!-- ✅ Map container -->
+  <div id="map" style="height: 300px; margin-top: 20px;"></div>
+</div>
+
+<!-- ✅ Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- ✅ Map logic -->
+<script>
+  var map = L.map('map').setView([11.2588, 75.7804], 9);  // Default view: Kerala
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+  var marker;
+
+  map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Update hidden fields
+    document.getElementById('id_latitude').value = lat;
+    document.getElementById('id_longitude').value = lng;
+
+    // Add or move marker
+    if (marker) {
+      marker.setLatLng(e.latlng);
+    } else {
+      marker = L.marker(e.latlng).addTo(map);
+    }
+  });
+</script>
+
+</body>
+</html>

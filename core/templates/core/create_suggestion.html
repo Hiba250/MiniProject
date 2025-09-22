@@ -1,0 +1,45 @@
+
+{% block content %}
+  <h2 style="text-align:center;">✈️ Suggest a Travel Plan</h2>
+
+  <form action="{% url 'create_suggestion' %}" method="POST">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_destination">Destination</label>
+      {{ form.destination }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_start_date">Start Date</label>
+      {{ form.start_date }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_end_date">End Date</label>
+      {{ form.end_date }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_budget">Budget</label>
+      {{ form.budget }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_theme">Theme</label>
+      {{ form.theme }}
+    </div>
+
+    <!-- ✅ Suggest to User -->
+    <div class="form-group">
+      <label for="suggested_for">Suggest to User</label>
+      <select name="suggested_for" id="suggested_for" required>
+        {% for user in users %}
+          <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit">Submit Plan</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+<h2>🛡️ Review Post Reports</h2>
+{% for report in reports %}
+  <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+    <p><strong>Post:</strong> {{ report.post.title }}</p>
+    <p><strong>Reported By:</strong> {{ report.reported_by.username }}</p>
+    <p><strong>Reason:</strong> {{ report.reason }}</p>
+    <p><strong>Status:</strong> {{ report.status }}</p>
+    <p><strong>Time:</strong> {{ report.timestamp| date:"F j, Y , g:i A" }}</p>
+  </div>
+{% empty %}
+  <p>No reports to review.</p>
+{% endfor %}

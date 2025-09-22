@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Feedback</title>
+</head>
+<body>
+    <h2>📣 Submit Feedback or Complaint</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="id_category">Type</label>
+            {{ form.category }}
+        </div>
+        <div>
+            <label for="id_message">Your Message</label>
+            {{ form.message }}
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
