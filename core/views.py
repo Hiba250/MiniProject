@@ -452,5 +452,3 @@ def manage_user_view(request):
         return redirect('dashboard')  # or wherever you want to go
 
     return render(request, 'core/manage_user.html', {'form': form, 'user': user})
-def index_view(request):
-    return render(request, 'core/index.html')
